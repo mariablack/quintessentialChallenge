@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useEffect } from 'react';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { TextField } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
@@ -11,37 +11,36 @@ import { userActions } from '../actions';
 import { ReactComponent as Logo } from '../images/login.svg';
 import font from '../fonts/ProductSansRegular.ttf';
 
-const theme = createMuiTheme({
-  overrides: {
-    MuiInputBase: {
-      input: {
-        color: '#474EBB',
-        borderRadius: '8px',
-        border: '2px solid #B8B8B8',
-        lineHeight: '22px',
-        fontSize: '18px',
-        textAlign: 'center',
-        letterSpacing: '0.035em',
-      },
+const useStyles = makeStyles({
+  root: {
+    '& .MuiOutlinedInput-input': {
+      color: '#474EBB',
+      borderRadius: '8px',
+      border: '2px solid #B8B8B8',
+      lineHeight: '22px',
+      fontSize: '18px',
+      textAlign: 'center',
+      letterSpacing: '0.035em',
     },
-    MuiFocused: {
+    'input:-internal-autofill-selected': {
+      color: '#474EBB',
+    },
+    '& .MuiFocused': {
       border: '2px solid #474EBB',
     },
-    MuiButton: {
-      contained: {
-        color: '#FFFF',
-        backgroundColor: '#474EBB',
-        fontSize: '18px',
-        lineHeight: '22px',
-        textTransform: 'capitalize',
-        letterSpacing: '0.035em',
-        boxShadow: '0px 0px 20px rgba(0, 0, 0, 0.25)',
-        borderRadius: '8px',
-        width: '257px',
-        height: '48px',
-        margin: '27% 0% 15% 0%',
-      },
-    },
+  },
+  button: {
+    color: '#FFFF',
+    backgroundColor: '#474EBB',
+    fontSize: '18px',
+    lineHeight: '22px',
+    textTransform: 'capitalize',
+    letterSpacing: '0.035em',
+    boxShadow: '0px 0px 20px rgba(0, 0, 0, 0.25)',
+    borderRadius: '8px',
+    width: '257px',
+    height: '48px',
+    margin: '27% 0% 15% 0%',
   },
 });
 
@@ -109,6 +108,7 @@ const LoginScreen = () => {
   );
   const dispatch = useDispatch();
   const history = useHistory();
+  const classes = useStyles();
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -125,44 +125,45 @@ const LoginScreen = () => {
   });
 
   return (
-    <ThemeProvider theme={theme}>
-      <div style={styles.wrapper}>
-        <Logo style={styles.logo} />
-        <div style={styles.fields}>
-          <p style={styles.title}>ΣΥΝΔΕΣΗ</p>
-          <p style={styles.label}>Δ/ση ηλεκτρονικού ταχυδρομείου*</p>
-          <TextField
-            required
-            id="mail"
-            variant="outlined"
-            value={mail}
-            style={styles.textField}
-            onChange={(event) => {
-              setMail(event.target.value);
-            }}
-          />
-          <p style={styles.label}>Κωδικός πρόσβασης</p>
-          <TextField
-            required
-            id="password"
-            variant="outlined"
-            value={password}
-            style={styles.textField}
-            onChange={(event) => setPassword(event.target.value)}
-            type="password"
-          />
-          <div>
-            <Button
-              variant="contained"
-              onClick={(event) => submitHandler(event)}
-            >
-              Είσοδος
-            </Button>
-          </div>
-          <p style={styles.link}>Ξέχασα τον κωδικό μου</p>
+    <div style={styles.wrapper}>
+      <Logo />
+      <div style={styles.fields}>
+        <p style={styles.title}>ΣΥΝΔΕΣΗ</p>
+        <p style={styles.label}>Δ/ση ηλεκτρονικού ταχυδρομείου*</p>
+        <TextField
+          required
+          id="mail"
+          variant="outlined"
+          value={mail}
+          style={styles.textField}
+          onChange={(event) => {
+            setMail(event.target.value);
+          }}
+          className={classes.root}
+        />
+        <p style={styles.label}>Κωδικός πρόσβασης</p>
+        <TextField
+          required
+          id="password"
+          variant="outlined"
+          value={password}
+          style={styles.textField}
+          onChange={(event) => setPassword(event.target.value)}
+          type="password"
+          className={classes.root}
+        />
+        <div>
+          <Button
+            variant="contained"
+            onClick={(event) => submitHandler(event)}
+            className={classes.button}
+          >
+            Είσοδος
+          </Button>
         </div>
+        <p style={styles.link}>Ξέχασα τον κωδικό μου</p>
       </div>
-    </ThemeProvider>
+    </div>
   );
 };
 

@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import SearchBar from '../components/SearchBar';
 import Menu from '../components/Menu';
 import Action from '../components/Action';
 import font from '../fonts/SFProDisplay-Regular.ttf';
-
 import { elipseRed, elipseYellow, elipseGreen } from '../images/elipses';
 
 const styles = {
@@ -45,6 +44,7 @@ const styles = {
     width: '900px',
   },
 };
+
 const data = [
   {
     title: 'ΕΞΑΓΩΓΗ',
@@ -64,20 +64,24 @@ const data = [
 ];
 
 const Homepage = () => {
-  <div style={styles.wrapper}>
-    <Menu />
-    <div style={styles.right_menu}>
-      <div style={styles.top_menu}>
-        <div style={styles.title}>Κεντρική σελίδα</div>
-        <SearchBar />
-      </div>
-      <div style={styles.actions}>
-        {data.map((item) => (
-          <Action action={item} />
-        ))}
+  const actions = data.map((item, i) => (
+    <Fragment key={i}>
+      <Action action={item} />
+    </Fragment>
+  ));
+
+  return (
+    <div style={styles.wrapper}>
+      <Menu />
+      <div style={styles.right_menu}>
+        <div style={styles.top_menu}>
+          <div style={styles.title}>Κεντρική σελίδα</div>
+          <SearchBar />
+        </div>
+        <div style={styles.actions}>{actions}</div>
       </div>
     </div>
-  </div>;
+  );
 };
 
 export default Homepage;

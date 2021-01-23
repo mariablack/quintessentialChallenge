@@ -56,7 +56,7 @@ const Action = (props) => {
 };
 
 Action.propTypes = {
-  action: PropTypes.string.isRequired,
+  action: PropTypes.object.isRequired,
 };
 
 export default Action;
