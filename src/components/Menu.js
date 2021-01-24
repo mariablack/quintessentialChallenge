@@ -16,62 +16,18 @@ import { ReactComponent as Settings } from '../images/settings.svg';
 import font from '../fonts/ProductSansRegular.ttf';
 import fontPro from '../fonts/SFProDisplay-Regular.ttf';
 
-// const theme = createMuiTheme({
-//   overrides: {
-//     Mui: {
-//       expanded: {
-//         display: 'flex',
-//         flexDirection: 'row-reverse',
-//         alignItems: 'center',
-//       },
-//     },
-//     MuiAccordionSummary: {
-//       root: {
-//         display: 'flex',
-//         flexDirection: 'row-reverse',
-//         height: '12px',
-//         width: '86px',
-//         fontSize: '10px',
-//         padding: '0px 37px',
-//         color: 'rgba(0, 0, 0, 0.58)',
-//       },
-//     },
-//     MuiPaper: {
-//       elevation1: {
-//         boxShadow: 'none',
-//       },
-//     },
-//     MuiAccordionDetails: {
-//       root: {
-//         display: 'flex',
-//         flexDirection: 'column',
-//       },
-//     },
-//     MuiButtonBase: {
-//       root: {
-//         minHeight: '34px!important',
-//       },
-//     },
-//   },
-// });
-
 const useStyles = makeStyles({
   root: {
-    display: 'flex',
-    flexDirection: 'row-reverse',
-    height: '12px',
-    width: '86px',
-    fontSize: '10px',
-    padding: '0px 37px',
-    color: 'rgba(0, 0, 0, 0.58)',
     boxShadow: 'none',
-    '& .Mui-expanded': {
+    '&::before': {
+      content: '',
+      backgroundColor: 'transparent',
+    },
+    '& .MuiButtonBase-root.MuiAccordionSummary-root': {
       display: 'flex',
       flexDirection: 'row-reverse',
       alignItems: 'center',
-      '& .MuiAccordion-rounded.MuiPaper-elevation1': {
-        boxShadow: 'none',
-      },
+      minHeight: '0px',
     },
   },
 });
@@ -100,9 +56,12 @@ const styles = {
     font: fontPro,
   },
   span: {
-    padding: '0px 11px',
-    width: '109px',
+    margin: '0px 8px',
     whiteSpace: 'nowrap',
+    fontSize: '10px',
+    lineHeight: '12px',
+    color: 'rgba(0, 0, 0, 0.58)',
+    width: '109px',
   },
   details: {
     display: 'flex',
@@ -162,7 +121,6 @@ const styles = {
 const Menu = () => {
   const classes = useStyles();
 
-  // <ThemeProvider theme={theme}>
   return (
     <div style={styles.wrapper}>
       <div style={styles.logo}>
@@ -170,7 +128,7 @@ const Menu = () => {
         <div style={styles.title}>Warehouse management</div>
       </div>
       <div style={styles.accordions}>
-        <Accordion expanded className={classes.root}>
+        <Accordion className={classes.root}>
           <AccordionSummary
             expandIcon={<MenuLst />}
             aria-controls="panel1a-content"
@@ -201,7 +159,7 @@ const Menu = () => {
             </div>
           </AccordionDetails>
         </Accordion>
-        <Accordion expanded className={classes.root}>
+        <Accordion className={classes.root}>
           <AccordionSummary
             expandIcon={<MenuLst />}
             aria-controls="panel1a-content"
@@ -224,7 +182,6 @@ const Menu = () => {
       </div>
     </div>
   );
-  // </ThemeProvider>
 };
 
 export default Menu;

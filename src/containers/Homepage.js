@@ -9,13 +9,13 @@ import { elipseRed, elipseYellow, elipseGreen } from '../images/elipses';
 const styles = {
   wrapper: {
     position: 'relative',
-    width: '1366px',
-    height: '768px',
+    width: '100vw',
+    height: '100vh',
     background: '#FFFFFF',
     display: 'flex',
   },
   right_menu: {
-    width: '1150px',
+    width: '100vw',
   },
   title: {
     width: '292px',
@@ -41,7 +41,7 @@ const styles = {
     justifyContent: 'space-between',
     margin: '70px auto',
     height: '500px',
-    width: '900px',
+    width: '1115px',
   },
 };
 

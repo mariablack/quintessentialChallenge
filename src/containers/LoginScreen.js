@@ -1,15 +1,19 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { TextField } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import * as yup from 'yup';
 
 import { userActions } from '../actions';
 
 import { ReactComponent as Logo } from '../images/login.svg';
 import font from '../fonts/ProductSansRegular.ttf';
+
+const schema = yup.object().shape({
+  mail: yup.string().email().required(),
+});
 
 const useStyles = makeStyles({
   root: {
@@ -56,7 +60,7 @@ const styles = {
     margin: '0px auto',
     display: 'flex',
     flexDirection: 'column',
-    width: '769px',
+    maxWidth: '900px',
     alignSelf: 'center',
     alignItems: 'center',
   },
@@ -98,11 +102,16 @@ const styles = {
     letterSpacing: '0.035em',
     color: '#000',
   },
+  error: {
+    color: 'red',
+    fontSize: '15px',
+  },
 };
 
 const LoginScreen = () => {
   const [mail, setMail] = useState('');
   const [password, setPassword] = useState('');
+  const [isValid, setIsValid] = useState(false);
   const authenticated = useSelector(
     (state) => state.authentication.authenticated
   );
@@ -113,7 +122,7 @@ const LoginScreen = () => {
   const submitHandler = (event) => {
     event.preventDefault();
 
-    if (mail && password) {
+    if (mail && password && isValid) {
       dispatch(userActions.login(mail));
     }
   };
@@ -123,6 +132,14 @@ const LoginScreen = () => {
       history.push('/homepage');
     }
   });
+
+  schema
+    .isValid({
+      mail,
+    })
+    .then(function (valid) {
+      setIsValid(valid);
+    });
 
   return (
     <div style={styles.wrapper}>
@@ -141,6 +158,9 @@ const LoginScreen = () => {
           }}
           className={classes.root}
         />
+        {!isValid ? (
+          <div style={styles.error}>Please enter an e-mail address</div>
+        ) : null}
         <p style={styles.label}>Κωδικός πρόσβασης</p>
         <TextField
           required
